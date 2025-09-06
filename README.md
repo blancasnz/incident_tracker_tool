@@ -33,7 +33,7 @@ A simple Incident Tracker tool for tracking internal system incidents.
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate # On Windows: .venv\Scripts\activate
+source .venv/bin/activate
 ```
 
 3. Install dependencies:
@@ -52,7 +52,7 @@ The API will be available at `http://127.0.0.1:5000`
 
 ## Example Usage
 
-#### With curl command
+#### With curl command or Postman
 
 ### 1. Create an incident
 
@@ -60,9 +60,9 @@ The API will be available at `http://127.0.0.1:5000`
 curl -X POST http://127.0.0.1:5000/incidents \
     -H "Content-Type: application/json" \
     -d '{
-        "title": "Database connection timeout",
-        "description": "Users cannot log in",
-        "reported_by": "john.doe@company.com",
+        "title": "Page is broken",
+        "description": "Users can not search for books",
+        "reported_by": "Blanca@hiremeplease.com",
         "severity": "High"
     }'
 ```
@@ -71,8 +71,8 @@ Response will look something like:
 
 ```bash
 {
-    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "title": "Database connection timeout",
+    "id": "1",
+    "title": "Page is broken",
     "status": "Open",
     ...
 }
@@ -102,7 +102,7 @@ curl "http://127.0.0.1:5000/incidents?status=Resolved&severity=High"
 
 ### Incident Fields
 
-- `id` : UUID (auto-generated)
+- `id` : Integer (auto-generated)
 - `title` : String (required)
 - `description` : String (required)
 - `reported_by` : String (required)

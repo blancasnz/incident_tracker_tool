@@ -3,7 +3,6 @@ Incident Tracker API with SQLite + SQLAlchemy
 Take Home Assignment - Penguin Randomhouse
 """
 
-import uuid
 from datetime import datetime, timezone
 from enum import Enum
 
@@ -39,7 +38,7 @@ class Incident(db.Model):
 
     __tablename__ = "incidents"
 
-    id = db.Column(db.String(36), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False)
     reported_by = db.Column(db.String(100), nullable=False)
@@ -50,7 +49,6 @@ class Incident(db.Model):
     )
 
     def __init__(self, title, description, reported_by, severity):
-        self.id = str(uuid.uuid4())
         self.title = title
         self.description = description
         self.reported_by = reported_by

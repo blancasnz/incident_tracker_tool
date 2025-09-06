@@ -1,6 +1,5 @@
 """Api tests for incident tracker"""
 
-# pylint: disable=redefined-outer-name
 import pytest
 from incident_tracker import app, db, Incident, Severity
 
@@ -18,7 +17,6 @@ def client():
             db.drop_all()
 
 
-##############################################################################
 # Testing POST
 def test_create_incident_success(client):
     """Test creating an incident"""
@@ -77,9 +75,6 @@ def test_create_incident_invalid_severity(client):
         assert Incident.query.count() == 0
 
 
-##############################################################################
-
-
 # Testing GET
 def test_get_incidents(client):
     """Test retrieving incidents with filter for status and severity"""
@@ -99,7 +94,7 @@ def test_get_incidents(client):
 
     incident_3 = {
         "title": "Test incident 3",
-        "description": "Something broke",
+        "description": "Something else broke",
         "reported_by": "Trent",
     }
 
@@ -121,9 +116,6 @@ def test_get_incidents(client):
     response_2 = client.get("/incidents?severity=Medium&status=Open")
     result_2 = response_2.get_json()
     assert result_2["total"] == 2
-
-
-##############################################################################
 
 
 # Testing PATCH
@@ -171,16 +163,13 @@ def test_update_incident_with_invalid_status(client):
 
 def test_update_nonexistent_incident(client):
     """ "Test updating an incident that doesn't exist"""
-    fake_id = "00000-000000-00000"
+    fake_id = "1"
     update_data = {"status": "Resolved"}
 
     response = client.patch(f"/incidents/{fake_id}", json=update_data)
     assert response.status_code == 404
     result = response.get_json()
     assert result["error"] == "Incident not found"
-
-
-##############################################################################
 
 
 # Testing DELETE
