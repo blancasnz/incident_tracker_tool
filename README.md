@@ -29,6 +29,10 @@ A simple Incident Tracker tool for tracking internal system incidents.
 
 1. Clone the repository
 
+```bash
+git clone https://github.com/blancasnz/incident_tracker_tool.git
+```
+
 2. Create a virtual environment
 
 ```bash
@@ -71,10 +75,13 @@ Response will look something like:
 
 ```bash
 {
-    "id": "1",
-    "title": "Page is broken",
-    "status": "Open",
-    ...
+  "description": "Users can not search for books",
+  "id": 1,
+  "reported_by": "Blanca@hiremeplease.com",
+  "severity": "High",
+  "status": "Open",
+  "timestamp": "2025-09-06T20:52:35.521060",
+  "title": "Page is broken"
 }
 ```
 
