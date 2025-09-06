@@ -1,0 +1,117 @@
+# Incident Tracker API
+
+A simple Incident Tracker tool for tracking internal system incidents.
+
+## Technologies Used
+
+- **Python** : Core programming language
+- **Flask** : Web framework for REST API
+- **SQLAlchemy** : ORM
+- **SQLite** : Lightweight database
+- **Pytest** : Testing framework
+
+## Features
+
+- Create, read, update, and delete incidents
+- Filter incidents by status and severity
+- SQLite database with persistent storage
+- Validation and error handling
+- Test coverage
+
+## API Endpoints
+
+- `POST /incidents` - Create a new incident
+- `GET /incidents` - Get all incidents (optional filtering)
+- `PATCH /incidents/<incident_id>` - Update an incident status
+- `DELETE /incidents/<incident_id>` - Delete an incident
+
+## Installation
+
+1. Clone the repository
+
+2. Create a virtual environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate # On Windows: .venv\Scripts\activate
+```
+
+3. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Running the Application
+
+```bash
+flask --app incident_tracker run --debug
+```
+
+The API will be available at `http://127.0.0.1:5000`
+
+## Example Usage
+
+#### With curl command
+
+### 1. Create an incident
+
+```bash
+curl -X POST http://127.0.0.1:5000/incidents \
+    -H "Content-Type: application/json" \
+    -d '{
+        "title": "Database connection timeout",
+        "description": "Users cannot log in",
+        "reported_by": "john.doe@company.com",
+        "severity": "High"
+    }'
+```
+
+Response will look something like:
+
+```bash
+{
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "Database connection timeout",
+    "status": "Open",
+    ...
+}
+```
+
+### 2. Get all incidents (can see incident ID's)
+
+```bash
+curl http://127.0.0.1:5000/incidents
+```
+
+### 3. Update incident status (using ID from step 1 or 2)
+
+```bash
+curl -X PATCH http://127.0.0.1:5000/incidents/<incident_id> \
+    -H "Content-Type: application/json" \
+    -d '{"status": "Resolved"}'
+```
+
+### 4. Filter incidents
+
+```bash
+curl "http://127.0.0.1:5000/incidents?status=Resolved&severity=High"
+```
+
+## Data Model
+
+### Incident Fields
+
+- `id` : UUID (auto-generated)
+- `title` : String (required)
+- `description` : String (required)
+- `reported_by` : String (required)
+- `severity` : Enum ["Low", "Medium", "High"] (default: "Medium")
+- `status` : Enum ["Open", "In Progress", "Resolved"] (default: "Open")
+- `timestamp`: DateTime (auto-generated, UTC)
+
+## Running Tests
+
+```bash
+pytest test_incident_tracker.py -v
+```
