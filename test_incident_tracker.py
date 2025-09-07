@@ -25,6 +25,7 @@ def test_create_incident_success(client):
         "title": "Test incident",
         "description": "Something broke",
         "reported_by": "Trent",
+        "severity": "Medium",
     }
 
     response = client.post("/incidents", json=data)
@@ -43,7 +44,11 @@ def test_create_incident_success(client):
 def test_create_incident_missing_title(client):
     """Test creating an incident with missing required field title fails"""
 
-    data = {"description": "Something broke", "reported_by": "Trent"}
+    data = {
+        "description": "Something broke",
+        "reported_by": "Trent",
+        "severity": Severity.MEDIUM.value,
+    }
 
     response = client.post("/incidents", json=data)
 
@@ -83,6 +88,7 @@ def test_get_incidents(client):
         "title": "Test incident 1",
         "description": "Something broke",
         "reported_by": "Trent",
+        "severity": Severity.MEDIUM.value,
     }
 
     incident_2 = {
@@ -96,6 +102,7 @@ def test_get_incidents(client):
         "title": "Test incident 3",
         "description": "Something else broke",
         "reported_by": "Trent",
+        "severity": Severity.MEDIUM.value,
     }
 
     client.post("/incidents", json=incident_1)
@@ -126,6 +133,7 @@ def test_update_incident_with_valid_status(client):
         "title": "Test incident 1",
         "description": "Something broke",
         "reported_by": "Trent",
+        "severity": Severity.LOW.value,
     }
 
     response = client.post("/incidents", json=data)
@@ -147,6 +155,7 @@ def test_update_incident_with_invalid_status(client):
         "title": "Test incident 1",
         "description": "Something broke",
         "reported_by": "Trent",
+        "severity": Severity.MEDIUM.value,
     }
 
     response = client.post("/incidents", json=data)
@@ -180,12 +189,14 @@ def test_delete_incident(client):
         "title": "Test incident 1",
         "description": "Something broke",
         "reported_by": "Trent",
+        "severity": Severity.MEDIUM.value,
     }
 
     incident_2 = {
         "title": "Test incident 2",
         "description": "Something broke again",
         "reported_by": "Trent",
+        "severity": Severity.MEDIUM.value,
     }
 
     client.post("/incidents", json=incident_1)

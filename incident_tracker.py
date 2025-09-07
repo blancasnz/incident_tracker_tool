@@ -42,7 +42,7 @@ class Incident(db.Model):
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False)
     reported_by = db.Column(db.String(100), nullable=False)
-    severity = db.Column(db.String(20), nullable=False, default="Medium")
+    severity = db.Column(db.String(20), nullable=False)
     status = db.Column(db.String(20), nullable=False, default="Open")
     timestamp = db.Column(
         db.DateTime(timezone=True), nullable=False, default=datetime.now(timezone.utc)
@@ -76,14 +76,14 @@ def validate_fields(data):
 
     missing = [
         k
-        for k in ("title", "description", "reported_by")
+        for k in ("title", "description", "reported_by", "severity")
         if not data.get(k) or not data.get(k).strip()
     ]
     if missing:
         return jsonify({"error": "Missing required field(s)", "missing": missing}), 400
 
     valid_severity = [severity.value for severity in Severity]
-    if "severity" in data and data["severity"] not in valid_severity:
+    if data["severity"] not in valid_severity:
         return (
             jsonify(
                 {
@@ -108,7 +108,7 @@ def create_incident():
         title=data["title"],
         description=data["description"],
         reported_by=data["reported_by"],
-        severity=data.get("severity", Severity.MEDIUM.value),
+        severity=data["severity"],
     )
 
     db.session.add(incident)

@@ -113,7 +113,7 @@ curl "http://127.0.0.1:5000/incidents?status=Resolved&severity=High"
 - `title` : String (required)
 - `description` : String (required)
 - `reported_by` : String (required)
-- `severity` : Enum ["Low", "Medium", "High"] (default: "Medium")
+- `severity` : Enum ["Low", "Medium", "High"]
 - `status` : Enum ["Open", "In Progress", "Resolved"] (default: "Open")
 - `timestamp`: DateTime (auto-generated, UTC)
 
