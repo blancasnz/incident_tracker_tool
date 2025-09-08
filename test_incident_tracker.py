@@ -8,13 +8,13 @@ from incident_tracker import app, db, Incident, Severity
 def client():
     """Create test client"""
     app.config["TESTING"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
 
     with app.test_client() as test_client:
         with app.app_context():
+            db.drop_all()
             db.create_all()
             yield test_client
-            db.drop_all()
 
 
 # Testing POST

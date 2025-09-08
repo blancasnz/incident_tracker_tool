@@ -102,7 +102,13 @@ curl -X PATCH http://127.0.0.1:5000/incidents/<incident_id> \
 ### 4. Filter incidents
 
 ```bash
-curl "http://127.0.0.1:5000/incidents?status=Resolved&severity=High"
+curl http://127.0.0.1:5000/incidents?status=Resolved&severity=High
+```
+
+### 5. Delete an incident
+
+```bash
+curl -X DELETE http://127.0.0.1:5000/incidents/<incident_id>
 ```
 
 ## Data Model
